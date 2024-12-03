@@ -1,17 +1,23 @@
 # node-download-pdf
-基于Puppeteer实现页面转PDF下载
+
+基于 Puppeteer 实现页面转 PDF 下载
+
+# git 地址：https://github.com/xueyongwu/node-download-pdf
 
 ## 解决思路
-搭建node服务，使用`Puppeteer`生成页面PDF的能力来实现
+
+搭建 node 服务，使用`Puppeteer`生成页面 PDF 的能力来实现
 
 ## 技术选型
+
 - `nodejs v14.5.0`
 - `express v4.17.1`
 - `pupperteer v4.0.1`
 
 ## 实现流程
 
-### 使用 `Puppeteer` 生成页面PDF
+### 使用 `Puppeteer` 生成页面 PDF
+
 #### 启动一个浏览器实例
 
 ```
@@ -39,7 +45,7 @@ await page.goto(url, {
 })
 ```
 
-#### 将页面生成PDF
+#### 将页面生成 PDF
 
 ```
 // pdf页眉
@@ -56,7 +62,7 @@ const footerTemplate = `
     <div><span class="pageNumber"></span> / <span class="totalPages"></span></div>
   </div>
 `
-/*********************************** 
+/***********************************
 * 1、pdf分页是由页面body元素的高度与pdf页面的高度决定
 * 2、下载的pdf无法加载页面中的懒加载图片
 * 3、适合下载数据已完全加载完毕的页面
@@ -79,7 +85,8 @@ const pdfBuffer = await page.pdf({
 await browser.close()
 ```
 
-### 基于 `express` 搭建node服务
+### 基于 `express` 搭建 node 服务
+
 #### 启动一个服务
 
 ```
@@ -116,7 +123,7 @@ app.use(express.urlencoded({ extended: true }))
 ```
 app.post('/download-pdf', async (req, res) => {
   const { url, fileName } = req.body
-  
+
   if (!url) {
     res.status(404).json({
       code: 404001,
@@ -167,25 +174,29 @@ a.click()
 document.body.removeChild(a)
 ```
 
-### node服务部署
-#### 安装nodejs
-##### apt安装最新版nodejs
-1. 请求nodejs14.x版本
+### node 服务部署
+
+#### 安装 nodejs
+
+##### apt 安装最新版 nodejs
+
+1. 请求 nodejs14.x 版本
 
 ```
 curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
 ```
 
-2. 安装nodejs
-> 安装nodejs的同时，也安装了npm，并自动配好环境变量
+2. 安装 nodejs
+   > 安装 nodejs 的同时，也安装了 npm，并自动配好环境变量
 
 ```
 apt install nodejs
 ```
 
-##### 二进制安装最新版nodejs
+##### 二进制安装最新版 nodejs
+
 1. 下载二进制文件
-> 上nodejs官网查找最新版二进制文件下载地址
+   > 上 nodejs 官网查找最新版二进制文件下载地址
 
 ```
 wget https://npm.taobao.org/mirrors/node/v14.5.0/node-v14.5.0-linux-x64.tar.xz
@@ -199,27 +210,34 @@ tar -xvf node-v14.5.0-linux-x64.tar.xz
 
 3. 配置环境变量
 
-配置node环境变量
+配置 node 环境变量
+
 ```
 ln -s /root/node-v14.5.0-linux-x64/bin/node /usr/local/bin/node
 ```
 
-配置npm环境变量
+配置 npm 环境变量
+
 ```
 ln -s /root/node-v14.5.0-linux-x64/bin/npm /usr/local/bin/npm
 ```
 
 #### 上传源码并安装依赖
-*此处省略*
+
+_此处省略_
 
 #### 启动服务
-##### 安装进程管理工具 pm2
-[pm2工具的使用](https://note.youdao.com/web/#/file/WEB2dc8842057495fe347f638cbbb448c08/markdown/WEB1267114a03ecefa0edb44707c53c9531/)
 
-##### ECS管理台配置可访问端口
+##### 安装进程管理工具 pm2
+
+[pm2 工具的使用](https://note.youdao.com/web/#/file/WEB2dc8842057495fe347f638cbbb448c08/markdown/WEB1267114a03ecefa0edb44707c53c9531/)
+
+##### ECS 管理台配置可访问端口
+
 [端口配置说明](https://help.aliyun.com/document_detail/25471.html?spm=a2c4e.11153940.0.0.465214c3Bq7WdM&source=5176.11533457&userCode=r3yteowb&type=copy)
 
-### linux使用puppeteer存在的问题
+### linux 使用 puppeteer 存在的问题
+
 - 依赖问题：使用 `puppeteer` 需要同时安装以下依赖
 
 ```
